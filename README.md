@@ -17,6 +17,7 @@
 - [Step 7 — Open the App](#step-7--open-the-app)
 - [Troubleshooting](#troubleshooting)
 - [Quick Start (TL;DR)](#quick-start-tldr)
+- [Website Showcase](#showcase)
 
 ---
 
@@ -271,3 +272,17 @@ No internet connection needed. No data leaves your machine.
 ---
 
 *Having issues not covered here? Check that all three steps above are complete before anything else.*
+
+---
+
+## Showcase
+
+![Showcase](main.png)
+
+![Showcase](output.png)
+
+![Showcase](input.png)
+
+![Showcase](history.png)
+
+![Showcase](settings.png)
