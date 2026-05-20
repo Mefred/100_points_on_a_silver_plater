@@ -48,6 +48,7 @@
                 resize: none;
                 font-size: 14px;
                 outline: none;
+                box-sizing: border-box;
             }
 
             textarea:focus {
@@ -87,13 +88,33 @@
                 border: 1px solid #374151;
                 border-radius: 10px;
                 min-height: 120px;
-                white-space: pre-wrap;
+                font-size: 14px;
+                line-height: 1.8;
+                word-wrap: break-word;
+                overflow-wrap: break-word;
             }
 
             .tag {
                 font-size: 12px;
                 color: #60a5fa;
                 margin-top: 8px;
+            }
+
+            /* Blinking cursor shown while streaming */
+            .cursor {
+                display: inline-block;
+                width: 2px;
+                height: 1em;
+                background: #60a5fa;
+                margin-left: 2px;
+                vertical-align: text-bottom;
+                animation: blink 0.8s step-end infinite;
+            }
+
+            @keyframes blink {
+                50% {
+                    opacity: 0;
+                }
             }
         </style>
     </head>
@@ -130,7 +151,6 @@
 
             btn.onclick = async () => {
                 const text = input.value.trim();
-
                 if (!text) {
                     output.textContent = "Please enter an experience.";
                     return;
@@ -147,17 +167,67 @@
                         body: JSON.stringify({ input: text }),
                     });
 
-                    const textResult = await res.text();
+                    if (!res.ok) throw new Error(`Server error: ${res.status}`);
 
-                    output.textContent = textResult;
+                    const reader = res.body.getReader();
+                    const decoder = new TextDecoder();
+                    let buffer = "";
+
+                    while (true) {
+                        const { done, value } = await reader.read();
+                        if (done) break;
+                        buffer += decoder.decode(value, { stream: true });
+
+                        // Render incrementally so the user sees tokens arrive,
+                        // but collapse stray newlines that are streaming artifacts.
+                        output.innerHTML = formatBullets(buffer);
+                    }
+
+                    buffer += decoder.decode();
+                    output.innerHTML = formatBullets(buffer);
                     status.textContent = "Done";
                 } catch (err) {
-                    output.textContent = "Error: " + err;
+                    output.textContent = "Error: " + err.message;
                     status.textContent = "Failed";
                 }
 
                 btn.disabled = false;
             };
+
+            function formatBullets(raw) {
+                // Collapse multiple newlines/spaces into single spaces,
+                // but split on bullet markers (•, -, *) to put each on its own line.
+                const cleaned = raw
+                    .replace(/\r\n/g, "\n")
+                    .replace(/\n+/g, " ") // collapse all newlines to spaces first
+                    .replace(/\s{2,}/g, " ") // collapse multiple spaces
+                    .trim();
+
+                // Split on bullet markers that appear mid-string
+                const lines = cleaned
+                    .split(/(?=[-•*]\s)/) // split before each bullet marker
+                    .map((l) => l.trim())
+                    .filter(Boolean);
+
+                if (lines.length <= 1) {
+                    // No bullets detected yet — just show as plain text while streaming
+                    return `<span>${escapeHtml(cleaned)}</span>`;
+                }
+
+                return lines
+                    .map(
+                        (line) =>
+                            `<div style="margin-bottom:8px">${escapeHtml(line)}</div>`,
+                    )
+                    .join("");
+            }
+
+            function escapeHtml(str) {
+                return str
+                    .replace(/&/g, "&amp;")
+                    .replace(/</g, "&lt;")
+                    .replace(/>/g, "&gt;");
+            }
 
             clear.onclick = () => {
                 input.value = "";
