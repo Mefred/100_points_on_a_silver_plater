@@ -5,6 +5,14 @@
 
 ---
 
+## 📚 Wiki
+
+Full documentation is available in the GitHub Wiki:
+
+👉 [Project Wiki](../../wiki)
+
+---
+
 ## 📋 Table of Contents
 
 - [What You Need](#what-you-need)
