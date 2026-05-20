@@ -1,239 +1,2110 @@
 <!doctype html>
-<html lang="en">
+<html lang="en" data-theme="macchiato">
     <head>
         <meta charset="UTF-8" />
         <meta name="viewport" content="width=device-width, initial-scale=1.0" />
         <title>ResumeBoost AI</title>
-
+        <link rel="preconnect" href="https://fonts.googleapis.com" />
+        <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+        <link
+            href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600&family=JetBrains+Mono:wght@400;500&display=swap"
+            rel="stylesheet"
+        />
         <style>
+            [data-theme="macchiato"] {
+                --base: #24273a;
+                --mantle: #1e2030;
+                --crust: #181926;
+                --surface0: #363a4f;
+                --surface1: #494d64;
+                --surface2: #5b6078;
+                --overlay0: #6e738d;
+                --overlay1: #8087a2;
+                --overlay2: #939ab7;
+                --subtext0: #a5adcb;
+                --subtext1: #b8c0e0;
+                --text: #cad3f5;
+                --mauve: #c6a0f6;
+                --mauve-dim: #9d7cd8;
+                --mauve-glow: rgba(198, 160, 246, 0.18);
+                --red: #ed8796;
+                --peach: #f5a97f;
+                --yellow: #eed49f;
+                --green: #a6da95;
+                --teal: #8bd5ca;
+                --blue: #8aadf4;
+                --lavender: #b7bdf8;
+                --pink: #f5bde6;
+            }
+            [data-theme="latte"] {
+                --base: #eff1f5;
+                --mantle: #e6e9ef;
+                --crust: #dce0e8;
+                --surface0: #ccd0da;
+                --surface1: #bcc0cc;
+                --surface2: #acb0be;
+                --overlay0: #9ca0b0;
+                --overlay1: #8c8fa1;
+                --overlay2: #7c7f93;
+                --subtext0: #6c6f85;
+                --subtext1: #5c5f77;
+                --text: #4c4f69;
+                --mauve: #8839ef;
+                --mauve-dim: #6d28c7;
+                --mauve-glow: rgba(136, 57, 239, 0.12);
+                --red: #d20f39;
+                --peach: #fe640b;
+                --yellow: #df8e1d;
+                --green: #40a02b;
+                --teal: #179299;
+                --blue: #1e66f5;
+                --lavender: #7287fd;
+                --pink: #ea76cb;
+            }
+
+            *,
+            *::before,
+            *::after {
+                box-sizing: border-box;
+                margin: 0;
+                padding: 0;
+            }
+
             body {
-                margin: 0;
-                font-family: system-ui, Arial, sans-serif;
-                background: #0b1220;
-                color: #e5e7eb;
+                font-family: "Inter", system-ui, sans-serif;
+                background: var(--base);
+                color: var(--text);
+                height: 100vh;
                 display: flex;
-                justify-content: center;
+                flex-direction: column;
+                font-size: 14px;
+                line-height: 1.5;
+                overflow: hidden;
+            }
+
+            /* ── Topbar ── */
+            .topbar {
+                display: flex;
                 align-items: center;
-                min-height: 100vh;
+                justify-content: space-between;
+                padding: 0 20px;
+                height: 50px;
+                background: var(--mantle);
+                border-bottom: 1px solid var(--surface0);
+                flex-shrink: 0;
+            }
+            .logo {
+                font-size: 15px;
+                font-weight: 600;
+                letter-spacing: -0.01em;
+                display: flex;
+                align-items: center;
+                gap: 8px;
+            }
+            .logo-dot {
+                width: 8px;
+                height: 8px;
+                border-radius: 50%;
+                background: var(--mauve);
+                box-shadow: 0 0 8px var(--mauve);
+            }
+            .topbar-right {
+                display: flex;
+                gap: 8px;
+                align-items: center;
             }
 
-            .app {
-                width: 92%;
-                max-width: 850px;
-                background: #111827;
-                border-radius: 16px;
-                padding: 24px;
-                box-shadow: 0 20px 60px rgba(0, 0, 0, 0.5);
+            /* OS-aware keybind button — styled like an actual pressable key */
+            .kbd-btn {
+                font-family: "JetBrains Mono", monospace;
+                font-size: 11px;
+                font-weight: 500;
+                color: var(--mauve);
+                background: var(--mauve-glow);
+                border: 1px solid
+                    color-mix(in srgb, var(--mauve) 40%, transparent);
+                padding: 4px 10px;
+                border-radius: 6px;
+                cursor: pointer;
+                transition: all 0.15s;
+                display: flex;
+                align-items: center;
+                gap: 5px;
+                user-select: none;
+            }
+            .kbd-btn:hover {
+                background: color-mix(in srgb, var(--mauve) 22%, transparent);
+                border-color: var(--mauve);
+                box-shadow: 0 0 8px var(--mauve-glow);
+            }
+            .kbd-btn:active {
+                transform: scale(0.96);
+            }
+            .kbd-btn .kbd-label {
+                font-size: 10px;
+                color: var(--subtext0);
             }
 
-            h1 {
-                margin: 0;
-                font-size: 28px;
+            .chip-btn {
+                font-family: "Inter", sans-serif;
+                font-size: 12px;
+                font-weight: 500;
+                color: var(--subtext0);
+                background: var(--surface0);
+                border: 1px solid var(--surface1);
+                padding: 5px 12px;
+                border-radius: 6px;
+                cursor: pointer;
+                transition: all 0.12s;
+            }
+            .chip-btn:hover {
+                color: var(--text);
+                border-color: var(--overlay0);
             }
 
-            p {
-                color: #9ca3af;
-                margin-top: 6px;
+            /* ── Tabs ── */
+            .tabs {
+                display: flex;
+                background: var(--mantle);
+                border-bottom: 1px solid var(--surface0);
+                padding: 0 20px;
+                flex-shrink: 0;
+            }
+            .tab {
+                font-family: "Inter", sans-serif;
+                font-size: 13px;
+                font-weight: 500;
+                color: var(--overlay1);
+                background: none;
+                border: none;
+                border-bottom: 2px solid transparent;
+                padding: 9px 14px;
+                margin-bottom: -1px;
+                cursor: pointer;
+                transition:
+                    color 0.12s,
+                    border-color 0.12s;
+                display: flex;
+                align-items: center;
+                gap: 6px;
+            }
+            .tab-count {
+                font-size: 10px;
+                font-weight: 600;
+                padding: 1px 6px;
+                border-radius: 10px;
+                background: var(--surface0);
+                color: var(--subtext0);
+                transition: all 0.12s;
+            }
+            .tab.active {
+                color: var(--mauve);
+                border-bottom-color: var(--mauve);
+            }
+            .tab.active .tab-count {
+                background: var(--mauve);
+                color: var(--base);
+            }
+            .tab:hover:not(.active) {
+                color: var(--subtext1);
             }
 
+            /* ── Panel shell ── */
+            .panel {
+                display: none;
+                flex: 1;
+                min-height: 0;
+                overflow: hidden;
+            }
+            .panel.active {
+                display: flex;
+            }
+
+            /* ── Generate layout ── */
+            .gen-layout {
+                display: grid;
+                grid-template-columns: 340px 1fr;
+                flex: 1;
+                min-height: 0;
+            }
+
+            /* LEFT column */
+            .left-col {
+                background: var(--mantle);
+                border-right: 1px solid var(--surface0);
+                display: flex;
+                flex-direction: column;
+                position: relative;
+                overflow: hidden;
+                min-height: 0;
+            }
+            .left-col-content {
+                flex: 1;
+                overflow-y: auto;
+                padding: 18px;
+                display: flex;
+                flex-direction: column;
+                gap: 16px;
+                min-height: 0;
+            }
+
+            /* Generating overlay — shades the whole left panel */
+            .left-col-overlay {
+                position: absolute;
+                inset: 0;
+                background: color-mix(in srgb, var(--crust) 60%, transparent);
+                backdrop-filter: blur(1px);
+                z-index: 10;
+                display: none;
+                flex-direction: column;
+                align-items: center;
+                justify-content: center;
+                gap: 14px;
+            }
+            .left-col-overlay.active {
+                display: flex;
+            }
+            .overlay-ring {
+                width: 44px;
+                height: 44px;
+                border-radius: 50%;
+                border: 3px solid var(--surface1);
+                border-top-color: var(--mauve);
+                animation: spin 0.7s linear infinite;
+            }
+            @keyframes spin {
+                to {
+                    transform: rotate(360deg);
+                }
+            }
+            .overlay-text {
+                font-size: 13px;
+                font-weight: 500;
+                color: var(--mauve);
+                display: flex;
+                align-items: center;
+                gap: 8px;
+            }
+            .overlay-dots span {
+                display: inline-block;
+                animation: blink 1.2s ease-in-out infinite;
+            }
+            .overlay-dots span:nth-child(2) {
+                animation-delay: 0.2s;
+            }
+            .overlay-dots span:nth-child(3) {
+                animation-delay: 0.4s;
+            }
+            @keyframes blink {
+                0%,
+                80%,
+                100% {
+                    opacity: 0.2;
+                }
+                40% {
+                    opacity: 1;
+                }
+            }
+
+            /* Mauve shimmer bar at top of left col while generating */
+            .gen-progress-bar {
+                position: absolute;
+                top: 0;
+                left: 0;
+                right: 0;
+                height: 3px;
+                background: linear-gradient(
+                    90deg,
+                    transparent,
+                    var(--mauve),
+                    var(--lavender),
+                    transparent
+                );
+                background-size: 200% 100%;
+                animation: shimmer 1.5s linear infinite;
+                display: none;
+                z-index: 11;
+            }
+            .gen-progress-bar.active {
+                display: block;
+            }
+            @keyframes shimmer {
+                from {
+                    background-position: 200% 0;
+                }
+                to {
+                    background-position: -200% 0;
+                }
+            }
+
+            /* RIGHT column */
+            .right-col {
+                padding: 18px;
+                display: flex;
+                flex-direction: column;
+                gap: 14px;
+                overflow-y: auto;
+                background: var(--base);
+            }
+
+            /* ── Fields ── */
+            .field {
+                display: flex;
+                flex-direction: column;
+                gap: 6px;
+            }
+            .field-label {
+                font-size: 11px;
+                font-weight: 600;
+                letter-spacing: 0.07em;
+                text-transform: uppercase;
+                color: var(--overlay1);
+                display: flex;
+                align-items: center;
+                justify-content: space-between;
+            }
+            .char-count {
+                font-family: "JetBrains Mono", monospace;
+                font-size: 10px;
+                color: var(--overlay0);
+                font-weight: 400;
+                letter-spacing: 0;
+                text-transform: none;
+            }
+            .char-count.warn {
+                color: var(--yellow);
+            }
+            .char-count.over {
+                color: var(--red);
+            }
+
+            /* ── Inputs ── */
+            input[type="text"],
             textarea {
                 width: 100%;
-                height: 140px;
-                margin-top: 16px;
-                padding: 12px;
-                border-radius: 10px;
-                border: 1px solid #374151;
-                background: #0f172a;
-                color: white;
-                resize: none;
-                font-size: 14px;
+                background: var(--surface0);
+                border: 1px solid var(--surface1);
+                border-radius: 8px;
+                color: var(--text);
+                font-family: "Inter", sans-serif;
+                font-size: 13px;
+                padding: 9px 12px;
                 outline: none;
-                box-sizing: border-box;
+                transition:
+                    border-color 0.15s,
+                    box-shadow 0.15s;
             }
-
+            input[type="text"]:focus,
             textarea:focus {
-                border-color: #3b82f6;
+                border-color: var(--mauve-dim);
+                box-shadow: 0 0 0 3px var(--mauve-glow);
+            }
+            input[type="text"]::placeholder,
+            textarea::placeholder {
+                color: var(--overlay0);
+            }
+            textarea {
+                min-height: 150px;
+                resize: vertical;
+                line-height: 1.6;
+                font-family: "JetBrains Mono", monospace;
+                font-size: 12.5px;
             }
 
-            .row {
+            /* ── Slider ── */
+            .slider-wrap {
+                background: var(--surface0);
+                border: 1px solid var(--surface1);
+                border-radius: 8px;
+                padding: 9px 14px;
                 display: flex;
+                align-items: center;
                 gap: 10px;
-                margin-top: 12px;
             }
-
-            button {
+            .slider-wrap input[type="range"] {
                 flex: 1;
-                padding: 12px;
-                border: none;
-                border-radius: 10px;
-                background: #2563eb;
-                color: white;
-                font-weight: 600;
+                accent-color: var(--mauve);
                 cursor: pointer;
             }
-
-            button:hover {
-                background: #1d4ed8;
+            .slider-num {
+                font-family: "JetBrains Mono", monospace;
+                font-size: 13px;
+                font-weight: 500;
+                color: var(--mauve);
+                min-width: 18px;
+                text-align: center;
+            }
+            .slider-end {
+                font-size: 11px;
+                color: var(--overlay0);
             }
 
-            button:disabled {
-                background: #374151;
+            /* ── Tone pills ── */
+            .tone-grid {
+                display: grid;
+                grid-template-columns: 1fr 1fr;
+                gap: 6px;
+            }
+            .tone-pill {
+                font-family: "Inter", sans-serif;
+                font-size: 12px;
+                font-weight: 500;
+                padding: 8px 10px;
+                border-radius: 7px;
+                border: 1px solid var(--surface1);
+                background: var(--surface0);
+                color: var(--subtext0);
+                cursor: pointer;
+                transition: all 0.12s;
+                text-align: center;
+                display: flex;
+                align-items: center;
+                justify-content: center;
+                gap: 5px;
+            }
+            .tone-pill:hover:not(.active) {
+                border-color: var(--overlay0);
+                color: var(--text);
+            }
+            .tone-pill.active {
+                border-color: var(--mauve);
+                background: color-mix(in srgb, var(--mauve) 15%, transparent);
+                color: var(--mauve);
+                font-weight: 600;
+            }
+
+            /* ── Action buttons ── */
+            .btn-generate {
+                width: 100%;
+                padding: 11px;
+                background: var(--mauve);
+                color: var(--base);
+                border: none;
+                border-radius: 8px;
+                font-family: "Inter", sans-serif;
+                font-size: 13px;
+                font-weight: 600;
+                cursor: pointer;
+                transition:
+                    opacity 0.12s,
+                    transform 0.1s;
+                display: flex;
+                align-items: center;
+                justify-content: center;
+                gap: 7px;
+            }
+            .btn-generate:hover {
+                opacity: 0.88;
+            }
+            .btn-generate:active {
+                transform: scale(0.98);
+            }
+            .btn-generate:disabled {
+                opacity: 0.35;
+                cursor: not-allowed;
+                transform: none;
+            }
+
+            .btn-secondary {
+                width: 100%;
+                padding: 9px;
+                background: none;
+                color: var(--subtext0);
+                border: 1px solid var(--surface1);
+                border-radius: 8px;
+                font-family: "Inter", sans-serif;
+                font-size: 13px;
+                font-weight: 500;
+                cursor: pointer;
+                transition: all 0.12s;
+            }
+            .btn-secondary:hover {
+                border-color: var(--overlay0);
+                color: var(--text);
+            }
+            .btn-secondary:disabled {
+                opacity: 0.4;
                 cursor: not-allowed;
             }
 
-            .output {
-                margin-top: 18px;
-                padding: 14px;
-                background: #0f172a;
-                border: 1px solid #374151;
-                border-radius: 10px;
-                min-height: 120px;
-                font-size: 14px;
-                line-height: 1.8;
-                word-wrap: break-word;
-                overflow-wrap: break-word;
+            .btn-sm {
+                font-family: "Inter", sans-serif;
+                font-size: 11.5px;
+                font-weight: 500;
+                padding: 5px 10px;
+                border-radius: 6px;
+                border: 1px solid var(--surface1);
+                background: none;
+                color: var(--subtext0);
+                cursor: pointer;
+                transition: all 0.12s;
+                white-space: nowrap;
+            }
+            .btn-sm:hover {
+                border-color: var(--overlay0);
+                color: var(--text);
+            }
+            .btn-sm.mauve {
+                color: var(--mauve);
+                border-color: color-mix(in srgb, var(--mauve) 30%, transparent);
+            }
+            .btn-sm.mauve:hover {
+                background: color-mix(in srgb, var(--mauve) 12%, transparent);
+                border-color: var(--mauve);
+            }
+            .btn-sm.danger {
+                color: var(--red);
+                border-color: color-mix(in srgb, var(--red) 25%, transparent);
+            }
+            .btn-sm.danger:hover {
+                background: color-mix(in srgb, var(--red) 10%, transparent);
+                border-color: var(--red);
+            }
+            .btn-sm.green {
+                color: var(--green);
+                border-color: color-mix(in srgb, var(--green) 25%, transparent);
+            }
+            .btn-sm.green:hover {
+                background: color-mix(in srgb, var(--green) 10%, transparent);
+                border-color: var(--green);
             }
 
-            .tag {
+            /* ── Empty / examples ── */
+            .empty-state {
+                flex: 1;
+                display: flex;
+                flex-direction: column;
+                align-items: center;
+                justify-content: center;
+                gap: 18px;
+                padding: 32px 20px;
+                text-align: center;
+            }
+            .empty-icon-wrap {
+                width: 52px;
+                height: 52px;
+                border-radius: 14px;
+                background: color-mix(in srgb, var(--mauve) 12%, transparent);
+                border: 1px solid
+                    color-mix(in srgb, var(--mauve) 25%, transparent);
+                display: flex;
+                align-items: center;
+                justify-content: center;
+                font-size: 22px;
+            }
+            .empty-title {
+                font-size: 15px;
+                font-weight: 600;
+                color: var(--subtext1);
+            }
+            .empty-sub {
+                font-size: 13px;
+                color: var(--overlay1);
+                max-width: 280px;
+                margin-top: 5px;
+            }
+            .example-prompts {
+                display: flex;
+                flex-direction: column;
+                gap: 7px;
+                width: 100%;
+                max-width: 380px;
+            }
+            .example-label {
+                font-size: 10px;
+                font-weight: 600;
+                letter-spacing: 0.07em;
+                text-transform: uppercase;
+                color: var(--overlay0);
+            }
+            .example-chip {
+                background: var(--surface0);
+                border: 1px solid var(--surface1);
+                border-radius: 8px;
+                padding: 9px 13px;
                 font-size: 12px;
-                color: #60a5fa;
-                margin-top: 8px;
+                color: var(--subtext0);
+                cursor: pointer;
+                text-align: left;
+                transition: all 0.12s;
+                font-family: "Inter", sans-serif;
+                line-height: 1.5;
+            }
+            .example-chip:hover {
+                border-color: var(--mauve-dim);
+                color: var(--text);
+                background: color-mix(in srgb, var(--mauve) 8%, transparent);
             }
 
-            /* Blinking cursor shown while streaming */
-            .cursor {
-                display: inline-block;
-                width: 2px;
-                height: 1em;
-                background: #60a5fa;
-                margin-left: 2px;
-                vertical-align: text-bottom;
-                animation: blink 0.8s step-end infinite;
+            /* ── Output header ── */
+            .output-header {
+                display: flex;
+                align-items: center;
+                justify-content: space-between;
+                flex-wrap: wrap;
+                gap: 8px;
+            }
+            .output-meta {
+                display: flex;
+                align-items: center;
+                gap: 8px;
+            }
+            .output-label {
+                font-size: 11px;
+                font-weight: 600;
+                letter-spacing: 0.07em;
+                text-transform: uppercase;
+                color: var(--overlay1);
+            }
+            .badge {
+                font-size: 10px;
+                font-weight: 600;
+                padding: 2px 8px;
+                border-radius: 10px;
+                background: color-mix(in srgb, var(--mauve) 18%, transparent);
+                color: var(--mauve);
+            }
+            .export-row {
+                display: flex;
+                gap: 5px;
             }
 
-            @keyframes blink {
+            /* ── Bullet cards ── */
+            .bullet-card {
+                background: var(--mantle);
+                border: 1px solid var(--surface0);
+                border-radius: 10px;
+                padding: 13px 15px;
+                transition:
+                    border-color 0.15s,
+                    box-shadow 0.15s;
+                cursor: grab;
+                animation: slideIn 0.18s ease forwards;
+            }
+            .bullet-card:active {
+                cursor: grabbing;
+            }
+            .bullet-card:hover {
+                border-color: var(--surface1);
+            }
+            .bullet-card.drag-over {
+                border-color: var(--mauve);
+                box-shadow: 0 0 0 2px var(--mauve-glow);
+            }
+            .bullet-card.dragging {
+                opacity: 0.35;
+            }
+            .bullet-card.regenerating {
+                border-color: var(--mauve-dim);
+                animation: pulse 1.1s ease-in-out infinite;
+            }
+            /* streaming placeholder */
+            .bullet-card.streaming {
+                border-color: color-mix(in srgb, var(--mauve) 35%, transparent);
+            }
+            @keyframes slideIn {
+                from {
+                    opacity: 0;
+                    transform: translateY(5px);
+                }
+                to {
+                    opacity: 1;
+                    transform: translateY(0);
+                }
+            }
+            @keyframes pulse {
+                0%,
+                100% {
+                    opacity: 0.55;
+                }
+                50% {
+                    opacity: 1;
+                }
+            }
+
+            .bullet-top {
+                display: flex;
+                align-items: flex-start;
+                gap: 10px;
+            }
+            .drag-handle {
+                font-size: 14px;
+                color: var(--overlay0);
+                cursor: grab;
+                padding: 1px 0;
+                user-select: none;
+                flex-shrink: 0;
+            }
+            .bullet-num {
+                font-family: "JetBrains Mono", monospace;
+                font-size: 10px;
+                font-weight: 500;
+                color: var(--mauve);
+                background: color-mix(in srgb, var(--mauve) 15%, transparent);
+                padding: 3px 7px;
+                border-radius: 5px;
+                flex-shrink: 0;
+                margin-top: 1px;
+                user-select: none;
+            }
+            .bullet-body {
+                flex: 1;
+                min-width: 0;
+            }
+            .bullet-text {
+                font-family: "JetBrains Mono", monospace;
+                font-size: 12.5px;
+                line-height: 1.65;
+                color: var(--text);
+                word-break: break-word;
+                min-height: 1.2em;
+            }
+            /* streaming cursor blink */
+            .bullet-text.streaming-cursor::after {
+                content: "▋";
+                color: var(--mauve);
+                animation: blink-cur 0.7s step-end infinite;
+            }
+            @keyframes blink-cur {
+                0%,
+                100% {
+                    opacity: 1;
+                }
                 50% {
                     opacity: 0;
                 }
             }
+            .bullet-text[contenteditable="true"] {
+                outline: none;
+                background: var(--surface0);
+                border-radius: 5px;
+                padding: 4px 8px;
+                margin: -4px -8px;
+                box-shadow: 0 0 0 2px var(--mauve-dim);
+            }
+            .bullet-wc {
+                font-size: 10px;
+                color: var(--overlay0);
+                margin-top: 4px;
+                font-family: "JetBrains Mono", monospace;
+            }
+
+            .bullet-footer {
+                display: flex;
+                align-items: center;
+                gap: 5px;
+                margin-top: 11px;
+                padding-top: 9px;
+                border-top: 1px solid var(--surface0);
+                flex-wrap: wrap;
+            }
+            .spacer {
+                flex: 1;
+            }
+
+            /* ── Streaming "thinking" skeleton card ── */
+            .skeleton-card {
+                background: var(--mantle);
+                border: 1px solid var(--surface0);
+                border-radius: 10px;
+                padding: 13px 15px;
+                display: flex;
+                flex-direction: column;
+                gap: 8px;
+            }
+            .skel-line {
+                height: 12px;
+                border-radius: 4px;
+                background: linear-gradient(
+                    90deg,
+                    var(--surface0) 25%,
+                    var(--surface1) 50%,
+                    var(--surface0) 75%
+                );
+                background-size: 200% 100%;
+                animation: skelShimmer 1.4s linear infinite;
+            }
+            @keyframes skelShimmer {
+                from {
+                    background-position: 200% 0;
+                }
+                to {
+                    background-position: -200% 0;
+                }
+            }
+
+            /* ── Toast ── */
+            .toast {
+                position: fixed;
+                bottom: 18px;
+                right: 18px;
+                background: var(--surface2);
+                color: var(--text);
+                border: 1px solid var(--surface1);
+                font-size: 12.5px;
+                font-weight: 500;
+                padding: 9px 16px;
+                border-radius: 8px;
+                transform: translateY(60px);
+                opacity: 0;
+                transition:
+                    transform 0.2s cubic-bezier(0.34, 1.56, 0.64, 1),
+                    opacity 0.2s;
+                z-index: 999;
+                pointer-events: none;
+                display: flex;
+                align-items: center;
+                gap: 7px;
+                max-width: 280px;
+            }
+            .toast.show {
+                transform: translateY(0);
+                opacity: 1;
+            }
+            .toast-dot {
+                width: 6px;
+                height: 6px;
+                border-radius: 50%;
+                background: var(--mauve);
+                flex-shrink: 0;
+            }
+
+            /* ── History panel ── */
+            .history-panel {
+                flex: 1;
+                overflow-y: auto;
+                padding: 22px;
+            }
+            .history-panel h2 {
+                font-size: 17px;
+                font-weight: 600;
+                margin-bottom: 4px;
+            }
+            .section-sub {
+                font-size: 12px;
+                color: var(--overlay1);
+                margin-bottom: 18px;
+            }
+            .h-toolbar {
+                display: flex;
+                align-items: center;
+                justify-content: space-between;
+                margin-bottom: 14px;
+            }
+            .h-empty {
+                color: var(--overlay1);
+                font-size: 13px;
+                padding: 28px 0;
+            }
+            .h-card {
+                background: var(--mantle);
+                border: 1px solid var(--surface0);
+                border-radius: 10px;
+                padding: 14px;
+                margin-bottom: 10px;
+                transition: border-color 0.12s;
+            }
+            .h-card:hover {
+                border-color: var(--surface1);
+            }
+            .h-preview {
+                font-family: "JetBrains Mono", monospace;
+                font-size: 11.5px;
+                color: var(--subtext0);
+                margin-bottom: 9px;
+                white-space: nowrap;
+                overflow: hidden;
+                text-overflow: ellipsis;
+            }
+            .h-bullets {
+                display: flex;
+                flex-direction: column;
+                gap: 5px;
+                margin-bottom: 11px;
+            }
+            .h-bullet {
+                font-size: 12.5px;
+                color: var(--text);
+                display: flex;
+                gap: 8px;
+                line-height: 1.5;
+            }
+            .h-bullet-arrow {
+                color: var(--mauve);
+                flex-shrink: 0;
+            }
+            .h-more {
+                font-size: 11px;
+                color: var(--overlay0);
+                font-family: "JetBrains Mono", monospace;
+            }
+            .h-meta {
+                display: flex;
+                align-items: center;
+                gap: 6px;
+                border-top: 1px solid var(--surface0);
+                padding-top: 9px;
+            }
+            .h-tag {
+                font-size: 10.5px;
+                font-weight: 600;
+                padding: 2px 8px;
+                border-radius: 10px;
+                background: var(--surface0);
+                color: var(--subtext0);
+                text-transform: capitalize;
+            }
+            .h-time {
+                font-size: 11px;
+                color: var(--overlay0);
+                font-family: "JetBrains Mono", monospace;
+            }
+            .h-load {
+                margin-left: auto;
+                font-family: "Inter", sans-serif;
+                font-size: 11px;
+                font-weight: 600;
+                padding: 5px 12px;
+                border: 1px solid var(--surface1);
+                border-radius: 6px;
+                background: none;
+                color: var(--subtext0);
+                cursor: pointer;
+                transition: all 0.12s;
+            }
+            .h-load:hover {
+                border-color: var(--mauve);
+                color: var(--mauve);
+            }
+
+            /* ── Settings panel ── */
+            .settings-panel {
+                flex: 1;
+                padding: 22px;
+                overflow-y: auto;
+                max-width: 520px;
+            }
+            .settings-panel h2 {
+                font-size: 17px;
+                font-weight: 600;
+                margin-bottom: 18px;
+            }
+            .setting-row {
+                display: flex;
+                align-items: center;
+                justify-content: space-between;
+                padding: 13px 0;
+                border-bottom: 1px solid var(--surface0);
+                gap: 16px;
+            }
+            .setting-info {
+                display: flex;
+                flex-direction: column;
+                gap: 2px;
+            }
+            .setting-name {
+                font-size: 13px;
+                font-weight: 500;
+            }
+            .setting-desc {
+                font-size: 12px;
+                color: var(--overlay1);
+            }
+            .toggle {
+                position: relative;
+                width: 40px;
+                height: 22px;
+                flex-shrink: 0;
+            }
+            .toggle input {
+                opacity: 0;
+                width: 0;
+                height: 0;
+            }
+            .toggle-slider {
+                position: absolute;
+                inset: 0;
+                background: var(--surface1);
+                border-radius: 11px;
+                cursor: pointer;
+                transition: background 0.2s;
+            }
+            .toggle-slider::before {
+                content: "";
+                position: absolute;
+                width: 16px;
+                height: 16px;
+                background: var(--overlay2);
+                border-radius: 50%;
+                top: 3px;
+                left: 3px;
+                transition:
+                    transform 0.2s,
+                    background 0.2s;
+            }
+            .toggle input:checked + .toggle-slider {
+                background: color-mix(in srgb, var(--mauve) 30%, transparent);
+            }
+            .toggle input:checked + .toggle-slider::before {
+                transform: translateX(18px);
+                background: var(--mauve);
+            }
+            .model-select {
+                font-family: "JetBrains Mono", monospace;
+                font-size: 12px;
+                padding: 6px 10px;
+                background: var(--surface0);
+                border: 1px solid var(--surface1);
+                border-radius: 6px;
+                color: var(--text);
+                cursor: pointer;
+                outline: none;
+            }
         </style>
     </head>
-
     <body>
-        <div class="app">
-            <h1>ResumeBoost AI</h1>
-            <p>
-                Turn simple experiences into professional resume bullets using
-                AI.
-            </p>
-
-            <textarea
-                id="input"
-                placeholder="Example: helped teacher organize papers..."
-            ></textarea>
-
-            <div class="row">
-                <button id="btn">Boost Resume</button>
-                <button id="clear">Clear</button>
+        <header class="topbar">
+            <div class="logo">
+                <div class="logo-dot"></div>
+                ResumeBoost AI
             </div>
+            <div class="topbar-right">
+                <button class="kbd-btn" id="kbdBtn" title="Generate">
+                    <span id="kbdKeys">⌘↵</span>
+                    <span class="kbd-label">Generate</span>
+                </button>
+                <button class="chip-btn" id="themeBtn">☀ Latte</button>
+            </div>
+        </header>
 
-            <div class="tag">Status: <span id="status">Idle</span></div>
+        <nav class="tabs">
+            <button class="tab active" data-tab="generate">Generate</button>
+            <button class="tab" data-tab="history">
+                History <span class="tab-count" id="historyCount">0</span>
+            </button>
+            <button class="tab" data-tab="settings">Settings</button>
+        </nav>
 
-            <div class="output" id="output">Output will appear here...</div>
+        <!-- ══ GENERATE ══ -->
+        <div class="panel active" id="tab-generate">
+            <div class="gen-layout">
+                <div class="left-col" id="leftCol">
+                    <div class="left-col-content">
+                        <div class="field">
+                            <div class="field-label">Target role</div>
+                            <input
+                                type="text"
+                                id="roleInput"
+                                placeholder="e.g. Senior Software Engineer"
+                            />
+                        </div>
+
+                        <div class="field">
+                            <div class="field-label">
+                                Experience
+                                <span class="char-count" id="charCount"
+                                    >0 / 1000</span
+                                >
+                            </div>
+                            <textarea
+                                id="input"
+                                placeholder="Describe what you did, tools used, and the impact…"
+                            ></textarea>
+                        </div>
+
+                        <div class="field">
+                            <div class="field-label">Bullet count</div>
+                            <div class="slider-wrap">
+                                <span class="slider-end">3</span>
+                                <input
+                                    id="count"
+                                    type="range"
+                                    min="3"
+                                    max="8"
+                                    value="5"
+                                    step="1"
+                                />
+                                <span class="slider-num" id="countLabel">5</span>
+                                <span class="slider-end">8</span>
+                            </div>
+                        </div>
+
+                        <div class="field">
+                            <div class="field-label">Tone</div>
+                            <div class="tone-grid">
+                                <button
+                                    class="tone-pill active"
+                                    data-tone="professional"
+                                >
+                                    💼 Professional
+                                </button>
+                                <button class="tone-pill" data-tone="concise">
+                                    ⚡ Concise
+                                </button>
+                                <button class="tone-pill" data-tone="technical">
+                                    ⚙️ Technical
+                                </button>
+                                <button class="tone-pill" data-tone="leadership">
+                                    🎯 Leadership
+                                </button>
+                            </div>
+                        </div>
+
+                        <div style="display: flex; flex-direction: column; gap: 8px">
+                            <button class="btn-generate" id="genBtn">
+                                <svg
+                                    width="13"
+                                    height="13"
+                                    viewBox="0 0 24 24"
+                                    fill="none"
+                                    stroke="currentColor"
+                                    stroke-width="2.5"
+                                    stroke-linecap="round"
+                                    stroke-linejoin="round"
+                                >
+                                    <path d="M12 2L2 7l10 5 10-5-10-5z" />
+                                    <path d="M2 17l10 5 10-5" />
+                                    <path d="M2 12l10 5 10-5" />
+                                </svg>
+                                Generate bullets
+                            </button>
+                            <button class="btn-secondary" id="clearBtn">
+                                Clear
+                            </button>
+                        </div>
+                    </div>
+                    <div class="gen-progress-bar" id="progressBar"></div>
+                    <div class="left-col-overlay" id="leftOverlay">
+                        <div class="overlay-ring"></div>
+                        <div class="overlay-text">
+                            Generating
+                            <span class="overlay-dots"
+                                ><span>.</span><span>.</span
+                                ><span>.</span></span
+                            >
+                        </div>
+                    </div>
+                </div>
+                <!-- /left-col -->
+
+                <div class="right-col" id="rightCol">
+                    <div class="empty-state" id="emptyState">
+                        <div class="empty-icon-wrap">✦</div>
+                        <div>
+                            <div class="empty-title">
+                                Ready to boost your resume
+                            </div>
+                            <div class="empty-sub">
+                                Describe your experience, or try an example
+                                below
+                            </div>
+                        </div>
+                        <div class="example-prompts">
+                            <div class="example-label">Quick start</div>
+                            <button
+                                class="example-chip"
+                                data-ex="Led a team of 6 engineers to rebuild our payment processing service in Go, cutting p99 latency by 40% and reaching 50K TPS."
+                            >
+                                🛠 Engineering — payment service rebuild
+                            </button>
+                            <button
+                                class="example-chip"
+                                data-ex="Managed social media for a B2B SaaS startup. Grew LinkedIn following from 2K to 18K in 8 months via organic content and paid campaigns."
+                            >
+                                📣 Marketing — LinkedIn growth
+                            </button>
+                            <button
+                                class="example-chip"
+                                data-ex="Ran QBRs with 12 enterprise clients, surfaced upsell opportunities, and grew ARR in those accounts by $1.2M in FY2024."
+                            >
+                                💰 Sales — enterprise account growth
+                            </button>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- ══ HISTORY ══ -->
+        <div class="panel" id="tab-history">
+            <div class="history-panel">
+                <div class="h-toolbar">
+                    <div>
+                        <h2>History</h2>
+                        <div class="section-sub">
+                            Your last 20 generations — click Load to restore any
+                            session
+                        </div>
+                    </div>
+                    <button class="btn-sm danger" id="clearHistoryBtn">
+                        Clear all
+                    </button>
+                </div>
+                <div id="historyList"></div>
+            </div>
+        </div>
+
+        <!-- ══ SETTINGS ══ -->
+        <div class="panel" id="tab-settings">
+            <div class="settings-panel">
+                <h2>Settings</h2>
+                <div class="setting-row">
+                    <div class="setting-info">
+                        <div class="setting-name">Ollama model</div>
+                        <div class="setting-desc">
+                            Local model used for generation
+                        </div>
+                    </div>
+                    <select class="model-select" id="modelSelect">
+                        <option value="">Loading…</option>
+                    </select>
+                </div>
+                <div class="setting-row">
+                    <div class="setting-info">
+                        <div class="setting-name">Auto-save to history</div>
+                        <div class="setting-desc">
+                            Save every generation automatically
+                        </div>
+                    </div>
+                    <label class="toggle"
+                        ><input
+                            type="checkbox"
+                            id="toggleAutoSave"
+                            checked /><span class="toggle-slider"></span
+                    ></label>
+                </div>
+                <div class="setting-row">
+                    <div class="setting-info">
+                        <div class="setting-name">Show word count</div>
+                        <div class="setting-desc">
+                            Display word count on each bullet card
+                        </div>
+                    </div>
+                    <label class="toggle"
+                        ><input type="checkbox" id="toggleWC" checked /><span
+                            class="toggle-slider"
+                        ></span
+                    ></label>
+                </div>
+                <div class="setting-row">
+                    <div class="setting-info">
+                        <div class="setting-name">Drag to reorder</div>
+                        <div class="setting-desc">
+                            Enable drag-and-drop bullet ordering
+                        </div>
+                    </div>
+                    <label class="toggle"
+                        ><input type="checkbox" id="toggleDrag" checked /><span
+                            class="toggle-slider"
+                        ></span
+                    ></label>
+                </div>
+            </div>
+        </div>
+
+        <div class="toast" id="toast">
+            <span class="toast-dot"></span><span id="toastMsg"></span>
         </div>
 
         <script>
-            const input = document.getElementById("input");
-            const btn = document.getElementById("btn");
-            const clear = document.getElementById("clear");
-            const output = document.getElementById("output");
-            const status = document.getElementById("status");
+            const $ = (id) => document.getElementById(id);
 
-            btn.onclick = async () => {
-                const text = input.value.trim();
-                if (!text) {
-                    output.textContent = "Please enter an experience.";
+            /* ── OS detection for keybind ── */
+            const isMac =
+                /Mac|iPhone|iPad|iPod/.test(navigator.platform) ||
+                (navigator.userAgent.includes("Mac") &&
+                    navigator.maxTouchPoints > 0);
+            const isLinux = /Linux/.test(navigator.platform) && !isMac;
+            // Windows is the fallback
+            let kbdSymbol, kbdMod;
+            if (isMac) {
+                kbdSymbol = "⌘↵";
+                kbdMod = "metaKey";
+            } else if (isLinux) {
+                kbdSymbol = "Ctrl+↵";
+                kbdMod = "ctrlKey";
+            } else {
+                kbdSymbol = "Ctrl+↵";
+                kbdMod = "ctrlKey";
+            }
+            $("kbdKeys").textContent = kbdSymbol;
+
+            /* ── State ── */
+            let selectedTone = "professional";
+            let currentBullets = [];
+            let currentInput = "";
+            let isGenerating = false;
+            let dragSrcIdx = null;
+
+            /* ── Settings ── */
+            const getSetting = (k, d) => {
+                try {
+                    const v = localStorage.getItem("rb_cfg_" + k);
+                    return v === null ? d : JSON.parse(v);
+                } catch {
+                    return d;
+                }
+            };
+            const setSetting = (k, v) =>
+                localStorage.setItem("rb_cfg_" + k, JSON.stringify(v));
+
+            async function fetchModels() {
+                const sel = $("modelSelect");
+                const saved = getSetting("model", "");
+                try {
+                    const res = await fetch("/models");
+                    const data = await res.json();
+                    sel.innerHTML = "";
+                    if (data.models && data.models.length) {
+                        data.models.forEach((m) => {
+                            const opt = document.createElement("option");
+                            opt.value = m;
+                            opt.textContent = m;
+                            sel.appendChild(opt);
+                        });
+                        if (saved && data.models.includes(saved)) {
+                            sel.value = saved;
+                        } else {
+                            sel.value = data.models[0];
+                            setSetting("model", data.models[0]);
+                        }
+                    } else {
+                        sel.innerHTML = '<option value="">No models found</option>';
+                    }
+                } catch {
+                    sel.innerHTML = '<option value="">Could not load models</option>';
+                }
+            }
+
+            $("toggleAutoSave").checked = getSetting("autoSave", true);
+            $("toggleWC").checked = getSetting("showWC", true);
+            $("toggleDrag").checked = getSetting("drag", true);
+            $("modelSelect").onchange = () =>
+                setSetting("model", $("modelSelect").value);
+            $("toggleAutoSave").onchange = () =>
+                setSetting("autoSave", $("toggleAutoSave").checked);
+            $("toggleWC").onchange = () =>
+                setSetting("showWC", $("toggleWC").checked);
+            $("toggleDrag").onchange = () =>
+                setSetting("drag", $("toggleDrag").checked);
+            fetchModels();
+
+            /* ── Theme ── */
+            $("themeBtn").onclick = () => {
+                const r = document.documentElement;
+                const isMac2 = r.getAttribute("data-theme") === "macchiato";
+                r.setAttribute("data-theme", isMac2 ? "latte" : "macchiato");
+                $("themeBtn").textContent = isMac2 ? "🌙 Macchiato" : "☀ Latte";
+            };
+
+            /* ── Tabs ── */
+            document.querySelectorAll(".tab").forEach((tab) => {
+                tab.onclick = () => {
+                    document
+                        .querySelectorAll(".tab")
+                        .forEach((t) => t.classList.remove("active"));
+                    document
+                        .querySelectorAll(".panel")
+                        .forEach((p) => p.classList.remove("active"));
+                    tab.classList.add("active");
+                    $("tab-" + tab.dataset.tab).classList.add("active");
+                    if (tab.dataset.tab === "history") loadHistory();
+                };
+            });
+
+            /* ── Slider ── */
+            $("count").oninput = () =>
+                ($("countLabel").textContent = $("count").value);
+
+            /* ── Char counter ── */
+            $("input").oninput = () => {
+                const len = $("input").value.length;
+                const cc = $("charCount");
+                cc.textContent = `${len} / 1000`;
+                cc.className =
+                    "char-count" +
+                    (len > 1000 ? " over" : len > 800 ? " warn" : "");
+            };
+
+            /* ── Tone ── */
+            document.querySelectorAll(".tone-pill").forEach((btn) => {
+                btn.onclick = () => {
+                    document
+                        .querySelectorAll(".tone-pill")
+                        .forEach((b) => b.classList.remove("active"));
+                    btn.classList.add("active");
+                    selectedTone = btn.dataset.tone;
+                };
+            });
+
+            /* ── Example chips ── */
+            function bindExampleChips() {
+                document.querySelectorAll(".example-chip").forEach((chip) => {
+                    chip.onclick = () => {
+                        $("input").value = chip.dataset.ex;
+                        $("input").dispatchEvent(new Event("input"));
+                        toast("Example loaded — hit Generate!");
+                    };
+                });
+            }
+            bindExampleChips();
+
+            /* ── Generate buttons + keyboard shortcut ── */
+            $("genBtn").onclick = () => generate();
+            $("kbdBtn").onclick = () => generate();
+            document.addEventListener("keydown", (e) => {
+                const modHeld = isMac ? e.metaKey : e.ctrlKey;
+                if (modHeld && e.key === "Enter") {
+                    e.preventDefault();
+                    generate();
+                }
+            });
+
+            /* ── Toast ── */
+            function toast(msg, dur = 2000) {
+                $("toastMsg").textContent = msg;
+                const t = $("toast");
+                t.classList.add("show");
+                clearTimeout(t._t);
+                t._t = setTimeout(() => t.classList.remove("show"), dur);
+            }
+
+            /* ── Loading state ── */
+            function setLoading(on) {
+                isGenerating = on;
+                $("genBtn").disabled = on;
+                $("clearBtn").disabled = on;
+                $("genBtn").innerHTML = on
+                    ? '<span style="display:inline-block;width:13px;height:13px;border:2px solid var(--base);border-top-color:transparent;border-radius:50%;animation:spin 0.6s linear infinite;"></span> Generating…'
+                    : '<svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><path d="M12 2L2 7l10 5 10-5-10-5z"/><path d="M2 17l10 5 10-5"/><path d="M2 12l10 5 10-5"/></svg> Generate bullets';
+
+                $("leftOverlay").classList.toggle("active", on);
+                $("progressBar").classList.toggle("active", on);
+            }
+
+            /* ════════════════════════════════
+   STREAMING GENERATE
+   ════════════════════════════════ */
+            async function generate() {
+                if (isGenerating) return;
+                const inputVal = $("input").value.trim();
+                if (!inputVal) {
+                    toast("Add some experience first");
                     return;
                 }
 
-                btn.disabled = true;
-                status.textContent = "Generating...";
-                output.textContent = "Thinking...";
+                const count = Number($("count").value);
+                const role = $("roleInput").value.trim();
+                const model = getSetting("model", "qwen2.5:1.5b");
 
+                setLoading(true);
+                currentBullets = [];
+                currentInput = inputVal;
+
+                /* Show skeleton placeholders while we wait for first token */
+                showSkeletons(count);
+
+                try {
+                    const res = await fetch("/stream", {
+                        method: "POST",
+                        headers: { "Content-Type": "application/json" },
+                        body: JSON.stringify({
+                            input: inputVal,
+                            bullet_count: count,
+                            tone: selectedTone,
+                            role,
+                            model,
+                        }),
+                    });
+
+                    if (!res.ok) throw new Error("Server error " + res.status);
+
+                    const reader = res.body.getReader();
+                    const decoder = new TextDecoder();
+                    let rawBuf = ""; // accumulates all tokens
+                    let done = false;
+
+                    while (!done) {
+                        const { value, done: streamDone } = await reader.read();
+                        done = streamDone;
+                        if (value) {
+                            const chunk = decoder.decode(value, {
+                                stream: true,
+                            });
+                            // Each line: "data: <token>\n"
+                            for (const line of chunk.split("\n")) {
+                                const trimmed = line.trim();
+                                if (!trimmed.startsWith("data: ")) continue;
+                                const token = trimmed.slice(6);
+                                if (token === "[DONE]") {
+                                    done = true;
+                                    break;
+                                }
+                                // unescape \n that backend encoded
+                                rawBuf += token.replace(/\\n/g, "\n");
+                                // Update live streaming display
+                                streamingUpdate(rawBuf);
+                            }
+                        }
+                    }
+
+                    /* Parse final accumulated JSON */
+                    const jsonStr = extractJson(rawBuf);
+                    let bullets = [];
+                    try {
+                        const parsed = JSON.parse(jsonStr);
+                        bullets = Array.isArray(parsed.bullets)
+                            ? parsed.bullets
+                                  .map((b) => String(b).trim())
+                                  .filter(Boolean)
+                            : [];
+                    } catch {
+                        bullets = [];
+                    }
+
+                    currentBullets = bullets;
+                    window._bullets = bullets;
+                    renderBullets(bullets);
+
+                    if (getSetting("autoSave", true)) {
+                        saveHistory(
+                            inputVal,
+                            bullets,
+                            selectedTone,
+                            count,
+                            role,
+                        );
+                    }
+                    updateHistoryCount();
+                } catch (e) {
+                    toast("Error: " + e.message, 3500);
+                    resetToEmpty();
+                } finally {
+                    setLoading(false);
+                }
+            }
+
+            /* ── Show skeleton cards while waiting ── */
+            function showSkeletons(count) {
+                const col = $("rightCol");
+                col.innerHTML = "";
+                for (let i = 0; i < count; i++) {
+                    const sk = document.createElement("div");
+                    sk.className = "skeleton-card";
+                    sk.id = "skel-" + i;
+                    const w1 = 60 + Math.random() * 35;
+                    const w2 = 30 + Math.random() * 40;
+                    sk.innerHTML = `<div class="skel-line" style="width:${w1.toFixed(0)}%"></div><div class="skel-line" style="width:${w2.toFixed(0)}%"></div>`;
+                    col.appendChild(sk);
+                }
+            }
+
+            /* ── Live token streaming display ── */
+            function streamingUpdate(raw) {
+                const bulletPattern = /"([^"\\]*(\\.[^"\\]*)*)"/g;
+                const arrMatch = raw.match(/"bullets"\s*:\s*\[([^]*)/);
+                if (!arrMatch) return;
+
+                const arrPart = arrMatch[1];
+                const found = [];
+                let m;
+                while ((m = bulletPattern.exec(arrPart)) !== null) {
+                    found.push(m[1]);
+                }
+
+                const lastOpen = arrPart.lastIndexOf('"');
+                const beforeLast = arrPart.lastIndexOf('"', lastOpen - 1);
+                const isPartial =
+                    lastOpen > beforeLast + 1 &&
+                    !arrPart.slice(lastOpen + 1).includes('"');
+                const partialText = isPartial
+                    ? arrPart.slice(lastOpen + 1)
+                    : "";
+
+                const col = $("rightCol");
+
+                found.forEach((txt, i) => {
+                    let card = col.querySelector("#sc-" + i);
+                    if (!card) {
+                        card = document.createElement("div");
+                        card.className = "bullet-card streaming";
+                        card.id = "sc-" + i;
+                        card.innerHTML = `<div class="bullet-top">
+        <span class="bullet-num">#${i + 1}</span>
+        <div class="bullet-body">
+          <div class="bullet-text streaming-cursor" id="sct-${i}"></div>
+        </div>
+      </div>`;
+                        const ref = col.querySelector("#skel-" + i);
+                        if (ref) {
+                            col.insertBefore(card, ref);
+                        } else {
+                            col.appendChild(card);
+                        }
+                    }
+                    const el = $("sct-" + i);
+                    if (el) {
+                        el.textContent = txt;
+                        el.classList.remove("streaming-cursor");
+                    }
+                    const sk = col.querySelector("#skel-" + i);
+                    if (sk) sk.remove();
+                });
+
+                if (partialText && found.length < 10) {
+                    const pi = found.length;
+                    let pcard = col.querySelector("#sc-p");
+                    if (!pcard) {
+                        pcard = document.createElement("div");
+                        pcard.className = "bullet-card streaming";
+                        pcard.id = "sc-p";
+                        pcard.innerHTML = `<div class="bullet-top">
+        <span class="bullet-num" id="sc-p-num"></span>
+        <div class="bullet-body">
+          <div class="bullet-text streaming-cursor" id="sct-p"></div>
+        </div>
+      </div>`;
+                        const ref = col.querySelector("#skel-" + pi) ||
+                                    col.querySelector("#sc-" + (pi + 1));
+                        if (ref) {
+                            col.insertBefore(pcard, ref);
+                        } else {
+                            col.appendChild(pcard);
+                        }
+                    }
+                    const numEl = $("sc-p-num");
+                    if (numEl) numEl.textContent = "#" + (pi + 1);
+                    const el = $("sct-p");
+                    if (el) el.textContent = partialText;
+                } else {
+                    const pcard = col.querySelector("#sc-p");
+                    if (pcard) pcard.remove();
+                }
+            }
+
+            /* ── Final render (with all controls) ── */
+            function renderBullets(bullets) {
+                const col = $("rightCol");
+                col.innerHTML = "";
+
+                if (!bullets.length) {
+                    col.innerHTML =
+                        '<div class="empty-state"><div class="empty-icon-wrap">⚠</div><div class="empty-title">No bullets returned</div><div class="empty-sub">Try rewording with more detail or numbers.</div></div>';
+                    return;
+                }
+
+                const header = document.createElement("div");
+                header.className = "output-header";
+                header.innerHTML = `
+    <div class="output-meta">
+      <span class="output-label">Output</span>
+      <span class="badge">${bullets.length} bullets</span>
+    </div>
+    <div class="export-row">
+      <button class="btn-sm" id="exportMdBtn">↓ .md</button>
+      <button class="btn-sm" id="exportTxtBtn">↓ .txt</button>
+      <button class="btn-sm" id="exportJsonBtn">↓ .json</button>
+      <button class="btn-sm" id="saveFileBtn">💾 Save file…</button>
+      <button class="btn-sm mauve" id="copyAllBtn">⎘ Copy all</button>
+    </div>`;
+                col.appendChild(header);
+
+                bullets.forEach((b, i) =>
+                    col.appendChild(makeBulletCard(b, i)),
+                );
+
+                $("copyAllBtn").onclick = () => {
+                    navigator.clipboard.writeText(
+                        bullets.map((b) => "• " + b).join("\n"),
+                    );
+                    toast("All bullets copied!");
+                };
+                $("exportMdBtn").onclick = () => exportBullets("md", false);
+                $("exportTxtBtn").onclick = () => exportBullets("txt", false);
+                $("exportJsonBtn").onclick = () => exportBullets("json", false);
+                $("saveFileBtn").onclick = () => saveToFile();
+
+                window._bullets = bullets;
+            }
+
+            /* ── Bullet card factory ── */
+            function makeBulletCard(text, i) {
+                const dragEnabled = getSetting("drag", true);
+                const showWC = getSetting("showWC", true);
+                const wc = text.trim().split(/\s+/).length;
+
+                const div = document.createElement("div");
+                div.className = "bullet-card";
+                div.id = "bullet-" + i;
+                div.draggable = dragEnabled;
+
+                div.innerHTML = `
+    <div class="bullet-top">
+      ${dragEnabled ? '<span class="drag-handle" title="Drag to reorder">⠿</span>' : ""}
+      <span class="bullet-num">#${i + 1}</span>
+      <div class="bullet-body">
+        <div class="bullet-text" contenteditable="false" id="bt-${i}">${esc(text)}</div>
+        ${showWC ? `<div class="bullet-wc">${wc} words</div>` : ""}
+      </div>
+    </div>
+    <div class="bullet-footer">
+      <button class="btn-sm mauve" onclick="redoBullet(${i})">↻ Redo</button>
+      <button class="btn-sm" id="editBtn-${i}" onclick="editBullet(${i})">✎ Edit</button>
+      <button class="btn-sm green" onclick="copyBullet(${i})">⎘ Copy</button>
+      <div class="spacer"></div>
+      <button class="btn-sm danger" onclick="deleteBullet(${i})">✕</button>
+    </div>`;
+
+                if (dragEnabled) {
+                    div.addEventListener("dragstart", () => {
+                        dragSrcIdx = i;
+                        div.classList.add("dragging");
+                    });
+                    div.addEventListener("dragend", () =>
+                        div.classList.remove("dragging"),
+                    );
+                    div.addEventListener("dragover", (e) => {
+                        e.preventDefault();
+                        div.classList.add("drag-over");
+                    });
+                    div.addEventListener("dragleave", () =>
+                        div.classList.remove("drag-over"),
+                    );
+                    div.addEventListener("drop", (e) => {
+                        e.preventDefault();
+                        div.classList.remove("drag-over");
+                        if (dragSrcIdx === null || dragSrcIdx === i) return;
+                        const moved = currentBullets.splice(dragSrcIdx, 1)[0];
+                        currentBullets.splice(i, 0, moved);
+                        window._bullets = currentBullets;
+                        renderBullets(currentBullets);
+                    });
+                }
+                return div;
+            }
+
+            /* ── Bullet actions ── */
+            window.copyBullet = (i) => {
+                navigator.clipboard.writeText(window._bullets[i]);
+                toast("Copied!");
+            };
+
+            window.editBullet = (i) => {
+                const el = $("bt-" + i);
+                const btn = $("editBtn-" + i);
+                const editing = el.getAttribute("contenteditable") === "true";
+                if (editing) {
+                    el.setAttribute("contenteditable", "false");
+                    window._bullets[i] = el.textContent.trim();
+                    currentBullets[i] = el.textContent.trim();
+                    btn.textContent = "✎ Edit";
+                    const wc = currentBullets[i].split(/\s+/).length;
+                    const wcEl = el
+                        .closest(".bullet-body")
+                        ?.querySelector(".bullet-wc");
+                    if (wcEl) wcEl.textContent = wc + " words";
+                    toast("Saved");
+                } else {
+                    el.setAttribute("contenteditable", "true");
+                    el.focus();
+                    btn.textContent = "✓ Save";
+                }
+            };
+
+            window.deleteBullet = (i) => {
+                currentBullets.splice(i, 1);
+                window._bullets = currentBullets;
+                renderBullets(currentBullets);
+                toast("Bullet removed");
+            };
+
+            window.redoBullet = async (i) => {
+                const card = $("bullet-" + i);
+                card.classList.add("regenerating");
+                const inputVal = currentInput || $("input").value.trim();
+                if (!inputVal) {
+                    toast("No input to redo from");
+                    card.classList.remove("regenerating");
+                    return;
+                }
                 try {
                     const res = await fetch("/ping", {
                         method: "POST",
                         headers: { "Content-Type": "application/json" },
-                        body: JSON.stringify({ input: text }),
+                        body: JSON.stringify({
+                            input: `${inputVal}\n\nRewrite ONLY this bullet with a completely different phrasing and opening verb. Original: "${currentBullets[i]}"`,
+                            bullet_count: 1,
+                            tone: selectedTone,
+                            model: getSetting("model", "qwen2.5:1.5b"),
+                        }),
                     });
-
-                    if (!res.ok) throw new Error(`Server error: ${res.status}`);
-
-                    const reader = res.body.getReader();
-                    const decoder = new TextDecoder();
-                    let buffer = "";
-
-                    while (true) {
-                        const { done, value } = await reader.read();
-                        if (done) break;
-                        buffer += decoder.decode(value, { stream: true });
-
-                        // Render incrementally so the user sees tokens arrive,
-                        // but collapse stray newlines that are streaming artifacts.
-                        output.innerHTML = formatBullets(buffer);
+                    const data = await res.json();
+                    const newText =
+                        Array.isArray(data.bullets) && data.bullets[0]
+                            ? data.bullets[0]
+                            : null;
+                    if (newText) {
+                        currentBullets[i] = newText;
+                        window._bullets[i] = newText;
+                        const el = $("bt-" + i);
+                        el.textContent = newText;
+                        const wcEl = el
+                            .closest(".bullet-body")
+                            ?.querySelector(".bullet-wc");
+                        if (wcEl)
+                            wcEl.textContent =
+                                newText.trim().split(/\s+/).length + " words";
+                        toast("Bullet rewritten!");
+                    } else {
+                        toast("Could not redo — try again");
                     }
-
-                    buffer += decoder.decode();
-                    output.innerHTML = formatBullets(buffer);
-                    status.textContent = "Done";
-                } catch (err) {
-                    output.textContent = "Error: " + err.message;
-                    status.textContent = "Failed";
+                } catch {
+                    toast("Error redoing bullet");
+                } finally {
+                    card.classList.remove("regenerating");
                 }
-
-                btn.disabled = false;
             };
 
-            function formatBullets(raw) {
-                // Collapse multiple newlines/spaces into single spaces,
-                // but split on bullet markers (•, -, *) to put each on its own line.
-                const cleaned = raw
-                    .replace(/\r\n/g, "\n")
-                    .replace(/\n+/g, " ") // collapse all newlines to spaces first
-                    .replace(/\s{2,}/g, " ") // collapse multiple spaces
-                    .trim();
+            /* ════════════════════════════════
+   SAVE TO FILE
+   ════════════════════════════════ */
+            async function saveToFile() {
+                // Prompt user for format
+                const fmt = await promptFormat();
+                if (!fmt) return;
+                const { content, ext, mime } = buildExportContent(fmt);
 
-                // Split on bullet markers that appear mid-string
-                const lines = cleaned
-                    .split(/(?=[-•*]\s)/) // split before each bullet marker
-                    .map((l) => l.trim())
-                    .filter(Boolean);
-
-                if (lines.length <= 1) {
-                    // No bullets detected yet — just show as plain text while streaming
-                    return `<span>${escapeHtml(cleaned)}</span>`;
+                // Try File System Access API first (Chrome/Edge on Windows/Linux/Mac)
+                if ("showSaveFilePicker" in window) {
+                    try {
+                        const handle = await window.showSaveFilePicker({
+                            suggestedName: "resume-bullets." + ext,
+                            types: [
+                                {
+                                    description: "Text file",
+                                    accept: { [mime]: ["." + ext] },
+                                },
+                            ],
+                        });
+                        const writable = await handle.createWritable();
+                        await writable.write(content);
+                        await writable.close();
+                        toast("Saved to file!");
+                        return;
+                    } catch (e) {
+                        if (e.name === "AbortError") return; // user cancelled
+                        // fall through to download
+                    }
                 }
-
-                return lines
-                    .map(
-                        (line) =>
-                            `<div style="margin-bottom:8px">${escapeHtml(line)}</div>`,
-                    )
-                    .join("");
+                // Fallback: trigger download
+                triggerDownload(content, "resume-bullets." + ext, mime);
+                toast("Downloaded!");
             }
 
-            function escapeHtml(str) {
-                return str
+            function promptFormat() {
+                return new Promise((resolve) => {
+                    const modal = document.createElement("div");
+                    modal.style.cssText = `position:fixed;inset:0;background:rgba(0,0,0,0.55);z-index:1000;display:flex;align-items:center;justify-content:center;`;
+                    modal.innerHTML = `
+      <div style="background:var(--mantle);border:1px solid var(--surface1);border-radius:12px;padding:22px;min-width:240px;display:flex;flex-direction:column;gap:12px;">
+        <div style="font-size:13px;font-weight:600;color:var(--text);">Choose file format</div>
+        <button class="btn-sm" id="fmt-md" style="padding:9px;">Markdown (.md)</button>
+        <button class="btn-sm" id="fmt-txt" style="padding:9px;">Plain text (.txt)</button>
+        <button class="btn-sm" id="fmt-json" style="padding:9px;">JSON (.json)</button>
+        <button class="btn-sm danger" id="fmt-cancel" style="padding:9px;">Cancel</button>
+      </div>`;
+                    document.body.appendChild(modal);
+                    const close = (fmt) => {
+                        document.body.removeChild(modal);
+                        resolve(fmt);
+                    };
+                    modal.querySelector("#fmt-md").onclick = () => close("md");
+                    modal.querySelector("#fmt-txt").onclick = () =>
+                        close("txt");
+                    modal.querySelector("#fmt-json").onclick = () =>
+                        close("json");
+                    modal.querySelector("#fmt-cancel").onclick = () =>
+                        close(null);
+                    modal.onclick = (e) => {
+                        if (e.target === modal) close(null);
+                    };
+                });
+            }
+
+            function buildExportContent(fmt) {
+                const role = $("roleInput").value.trim();
+                let content, ext, mime;
+                if (fmt === "md") {
+                    content =
+                        (role ? `# ${role} — Resume Bullets\n\n` : "") +
+                        currentBullets.map((b) => `- ${b}`).join("\n");
+                    ext = "md";
+                    mime = "text/markdown";
+                } else if (fmt === "json") {
+                    content = JSON.stringify(
+                        {
+                            role: role || null,
+                            tone: selectedTone,
+                            bullets: currentBullets,
+                        },
+                        null,
+                        2,
+                    );
+                    ext = "json";
+                    mime = "application/json";
+                } else {
+                    content =
+                        (role ? role + "\n\n" : "") +
+                        currentBullets.map((b) => "• " + b).join("\n");
+                    ext = "txt";
+                    mime = "text/plain";
+                }
+                return { content, ext, mime };
+            }
+
+            function exportBullets(fmt, silent) {
+                const { content, ext, mime } = buildExportContent(fmt);
+                triggerDownload(content, `resume-bullets.${ext}`, mime);
+                if (!silent) toast("Downloaded!");
+            }
+
+            function triggerDownload(content, filename, mime) {
+                const blob = new Blob([content], { type: mime });
+                const a = document.createElement("a");
+                a.href = URL.createObjectURL(blob);
+                a.download = filename;
+                a.click();
+                setTimeout(() => URL.revokeObjectURL(a.href), 5000);
+            }
+
+            /* ── Helpers ── */
+            function extractJson(str) {
+                const s = str.indexOf("{"),
+                    e = str.lastIndexOf("}");
+                return s !== -1 && e > s ? str.slice(s, e + 1) : "{}";
+            }
+
+            function esc(s) {
+                return String(s)
                     .replace(/&/g, "&amp;")
                     .replace(/</g, "&lt;")
-                    .replace(/>/g, "&gt;");
+                    .replace(/>/g, "&gt;")
+                    .replace(/"/g, "&quot;");
             }
 
-            clear.onclick = () => {
-                input.value = "";
-                output.textContent = "Output will appear here...";
-                status.textContent = "Idle";
+            function resetToEmpty() {
+                $("rightCol").innerHTML =
+                    `<div class="empty-state"><div class="empty-icon-wrap">✦</div><div class="empty-title">Ready to boost your resume</div><div class="empty-sub">Describe your experience, or try an example below</div><div class="example-prompts"><div class="example-label">Quick start</div><button class="example-chip" data-ex="Led a team of 6 engineers to rebuild our payment processing service in Go, cutting p99 latency by 40% and reaching 50K TPS.">🛠 Engineering — payment service rebuild</button><button class="example-chip" data-ex="Managed social media for a B2B SaaS startup. Grew LinkedIn following from 2K to 18K in 8 months via organic content and paid campaigns.">📣 Marketing — LinkedIn growth</button><button class="example-chip" data-ex="Ran QBRs with 12 enterprise clients, surfaced upsell opportunities, and grew ARR in those accounts by $1.2M in FY2024.">💰 Sales — enterprise account growth</button></div></div>`;
+                bindExampleChips();
+            }
+
+            /* ── Clear ── */
+            $("clearBtn").onclick = () => {
+                $("input").value = "";
+                $("roleInput").value = "";
+                $("charCount").textContent = "0 / 1000";
+                currentBullets = [];
+                currentInput = "";
+                resetToEmpty();
             };
+
+            /* ── History ── */
+            function updateHistoryCount() {
+                const h = JSON.parse(localStorage.getItem("rb_v2") || "[]");
+                $("historyCount").textContent = h.length;
+            }
+
+            function saveHistory(input, bullets, tone, count, role) {
+                const h = JSON.parse(localStorage.getItem("rb_v2") || "[]");
+                h.unshift({
+                    input,
+                    bullets,
+                    tone,
+                    count,
+                    role: role || "",
+                    ts: Date.now(),
+                });
+                localStorage.setItem("rb_v2", JSON.stringify(h.slice(0, 20)));
+                updateHistoryCount();
+            }
+
+            function loadHistory() {
+                const list = $("historyList");
+                list.innerHTML = "";
+                const h = JSON.parse(localStorage.getItem("rb_v2") || "[]");
+                if (!h.length) {
+                    list.innerHTML =
+                        '<p class="h-empty">No history yet — generate some bullets first.</p>';
+                    return;
+                }
+                h.forEach((item, idx) => {
+                    const card = document.createElement("div");
+                    card.className = "h-card";
+                    const bulletsHtml = (item.bullets || [])
+                        .slice(0, 3)
+                        .map(
+                            (b) =>
+                                `<div class="h-bullet"><span class="h-bullet-arrow">›</span><span>${esc(b)}</span></div>`,
+                        )
+                        .join("");
+                    const more =
+                        item.bullets.length > 3
+                            ? `<div class="h-more">+${item.bullets.length - 3} more</div>`
+                            : "";
+                    card.innerHTML = `
+      <div class="h-preview">${esc(item.input.slice(0, 130))}</div>
+      <div class="h-bullets">${bulletsHtml}${more}</div>
+      <div class="h-meta">
+        ${item.role ? `<span class="h-tag">${esc(item.role)}</span>` : ""}
+        <span class="h-tag">${esc(item.tone || "professional")}</span>
+        <span class="h-tag">${item.count || item.bullets.length} bullets</span>
+        <span class="h-time">${timeAgo(item.ts)}</span>
+        <button class="h-load" onclick="loadFromHistory(${idx})">Load →</button>
+      </div>`;
+                    list.appendChild(card);
+                });
+            }
+
+            window.loadFromHistory = (idx) => {
+                const h = JSON.parse(localStorage.getItem("rb_v2") || "[]");
+                const item = h[idx];
+                if (!item) return;
+                $("input").value = item.input;
+                $("roleInput").value = item.role || "";
+                $("input").dispatchEvent(new Event("input"));
+                currentInput = item.input;
+                currentBullets = [...item.bullets];
+                window._bullets = currentBullets;
+                renderBullets(currentBullets);
+                document
+                    .querySelectorAll(".tab")
+                    .forEach((t) => t.classList.remove("active"));
+                document
+                    .querySelectorAll(".panel")
+                    .forEach((p) => p.classList.remove("active"));
+                document
+                    .querySelector('[data-tab="generate"]')
+                    .classList.add("active");
+                $("tab-generate").classList.add("active");
+                toast("Session restored");
+            };
+
+            $("clearHistoryBtn").onclick = () => {
+                if (!confirm("Clear all history?")) return;
+                localStorage.removeItem("rb_v2");
+                loadHistory();
+                updateHistoryCount();
+                toast("History cleared");
+            };
+
+            function timeAgo(ts) {
+                const s = Math.floor((Date.now() - ts) / 1000);
+                if (s < 60) return "just now";
+                if (s < 3600) return Math.floor(s / 60) + "m ago";
+                if (s < 86400) return Math.floor(s / 3600) + "h ago";
+                return Math.floor(s / 86400) + "d ago";
+            }
+            updateHistoryCount();
         </script>
     </body>
 </html>
