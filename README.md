@@ -139,18 +139,18 @@ rustc --version
 In your terminal, navigate to the project folder:
 
 ```bash
-cd path/to/ResumeBoostAI
+cd path/to/100_points_on_a_silver_plate
 ```
 
 Not sure where it is? Common locations:
 
 ```bash
 # macOS / Linux
-cd ~/Downloads/ResumeBoostAI
-cd ~/Desktop/ResumeBoostAI
+cd ~/Downloads/100_points_on_a_silver_plate
+cd ~/Desktop/100_points_on_a_silver_plate
 
 # Windows
-cd C:\Users\YourName\Downloads\ResumeBoostAI
+cd C:\Users\YourName\Downloads\100_points_on_a_silver_plate
 ```
 
 ---
