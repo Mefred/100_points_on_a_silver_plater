@@ -285,7 +285,7 @@ No internet connection needed. No data leaves your machine.
 
 ## Showcase
 
-![Showcase](main.png)
+![Showcase](home.png)
 
 ![Showcase](output.png)
 
@@ -294,3 +294,5 @@ No internet connection needed. No data leaves your machine.
 ![Showcase](history.png)
 
 ![Showcase](settings.png)
+
+![Showcase](home_light.png)
