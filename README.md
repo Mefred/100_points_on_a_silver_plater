@@ -1,4 +1,4 @@
-# 🚀 ResumeBoost AI — Setup Guide
+# 🚀 Resumio — Setup Guide
 
 > **No programming experience required.**  
 > Everything is **free** and runs **100% offline** on your machine.
