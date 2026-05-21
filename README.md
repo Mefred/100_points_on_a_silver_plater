@@ -285,14 +285,14 @@ No internet connection needed. No data leaves your machine.
 
 ## Showcase
 
-![Showcase](home.png)
+![Showcase](home.PNG)
 
-![Showcase](output.png)
+![Showcase](output.PNG)
 
-![Showcase](input.png)
+![Showcase](input.PNG)
 
-![Showcase](history.png)
+![Showcase](history.PNG)
 
-![Showcase](settings.png)
+![Showcase](settings.PNG)
 
-![Showcase](home_light.png)
+![Showcase](home_light.PNG)
