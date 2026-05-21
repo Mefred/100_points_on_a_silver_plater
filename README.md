@@ -274,7 +274,7 @@ cargo run
 
 ## 🟢 You're All Set
 
-Your ResumeBoost AI is running fully locally.  
+Resumio is running fully locally.  
 No internet connection needed. No data leaves your machine.
 
 ---
